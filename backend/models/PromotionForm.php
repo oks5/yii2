@@ -29,16 +29,17 @@ class PromotionForm extends Model
         'imageFile' => 'Rартинка',
         ];        
     }
-    public function upload(){
-        if($this->validate('name, description')){
-            $this->imageFile->saveAs($this->imagePath());
-            return true;
+    
+    public function upload()
+    {
+        if($this->validate()){
+            $fileName = md5(microtime() . rand(0, 10000));
+            $imagePath = '../../images/promotion/' . $fileName . '.' . $this->imageFile->extension;
+            $this->imageFile->saveAs($imagePath);
+            $result[] = '../../' . $imagePath;
+            return $result;
         }
         return false;
-    }
-    public function imagePath()
-    {
-        return '../../uploads/' . $this->imageFile->baseName . '.' .  $this->imageFile->extension;
     }
 
 }

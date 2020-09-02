@@ -27,7 +27,7 @@ class TovarForm extends Model
             [['name', 'description', 'category_id', 'subcategory_id'], 'required',  'message' =>'невірний тип'],
             // [['name', 'description'], 'string', 'message' =>'треба значення'],
             [['count', 'price'], 'required', 'message' =>'треба значення'],
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg',  'maxFiles' => 15],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg',  'maxFiles' => 15],
         ];
     }
 
@@ -50,9 +50,9 @@ class TovarForm extends Model
             $result = [];
             foreach ($this->imageFile as $file) {
                 $fileName = md5(microtime() . rand(0, 10000));
-                $imagePath = '../../uploads/tovar/' . $fileName . '.' . $file->extension;
+                $imagePath = '../../images/tovar/' . $fileName . '.' . $file->extension;
                 $file->saveAs($imagePath);
-                $result[] = $imagePath;
+                $result[] = '../../' . $imagePath;
 
             }
             

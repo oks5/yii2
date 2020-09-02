@@ -6,6 +6,7 @@
     use yii\helpers\Url;
     use kartik\widgets\FileInput;
 
+    
 
     $this->title = 'Створення товару';
     $this->params['breadcrumbs'][] = ['label' => 'Товар', 'url' => ['index']];
@@ -69,20 +70,19 @@
 
         <div class="row">
             <div class="col-md-6">
-            <?= $form->field($model, 'discount_id')->widget(Select2::classname(), [
-                    'data' => $discount,
-                    'language' => 'uk-UA',
-                    'options' => [
-                        'id' => 'discount',
-                        'placeholder' => 'Виберіть ...',
-                        'multiple' => false,
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ]);?>
+                <?= $form->field($model, 'discount_id')->widget(Select2::classname(), [
+                        'data' => $discount,
+                        'language' => 'uk-UA',
+                        'options' => [
+                            'id' => 'discount',
+                            'placeholder' => 'Виберіть ...',
+                            'multiple' => false,
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]);?>
             </div>
-
             <div class="col-md-3">
                 <?= $form->field($model, 'price')->textInput(['type' => 'number', 'min' => '0', 'step' => '0.01']); ?>
             </div>
@@ -90,45 +90,40 @@
                 <?= $form->field($model, 'count')->textInput(['type' => 'number', 'min' => '0', 'step' => '1']); ?>
             </div>
         </div>
-
-
         <div class="row">
             <div class="col-md-12">
             <?= $form->field($model, 'imageFile')->widget(FileInput::classname(), [
-              'options' =>
-               ['accept' => 'image/*',
-              'multiple' => true,
-              'max' => 5,
-
-              ],
-              'pluginOptions' => [
-                'initialPreview'=> $imagePath_prew,
-                // Url::to([$imagePath_prew[0]], true),
-                'initialPreviewAsData'=>true,      
-                'showCaption' => false,
-                'showRemove' => true,
-                'showUpload' => false,
-                'removeClass' => 'btn btn-default pull-right',
-                'browseClass' => 'btn btn-primary pull-right',
-                'removeLabel' => 'видалити',
-                'browseLabel' => 'завантажити'
-            ],
-              ]); ?>
+                    'options' => [
+                        'accept' => 'image/*',
+                        'multiple' => true,
+                        'max' => 5,
+                    ],
+                    'pluginOptions' => [
+                        'initialPreview'=> $imagePath_prew,    
+                        'initialPreviewConfig' => $imagePath_conf,                 
+                        'initialPreviewAsData'=>true,
+                        'showCaption' => false,
+                        'showRemove' => true,
+                        'showUpload' => false,
+                        'removeClass' => 'btn btn-default pull-right',
+                        'browseClass' => 'btn btn-primary pull-right',
+                        'removeLabel' => 'Видалити',
+                        'browseLabel' =>  'Завантажити',
+                        'deleteUrl' => Url::to(['/select-data/' . $tovar_id . '/file-delete-tovar']),
+                        'overwriteInitial'=>false,
+                    ],
+                ]);?>
             </div>
         </div>
-
-
         <div class="row">
             <div class="col-md-12">
                 <?= $form->field($model, 'description')->textarea(['row' => '5']);?>
             </div>
         </div>    
     </div>
-
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success btn-block']) ?>
     </div>
-
     <?php
         ActiveForm::end();
     ?>

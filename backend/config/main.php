@@ -43,7 +43,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'tovar/index',
-                '<controller/<id:\d+>/<action>' => '<controller>/<action>',
+                '<controller>/<id:\d+>/<action>' => '<controller>/<action>',
 
             ],
         ],

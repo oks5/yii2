@@ -41,7 +41,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                // '/' => 'tovar/index',
+                '/' => 'shop/index',
                 '<controller/<id:\d+>/<action>' => '<controller>/<action>',
             ],
         ],

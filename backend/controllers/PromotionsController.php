@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use common\models\Promotions;
+use common\models\Tovar;
 use yii\data\ActiveDataProvider;
 
 // use yii\filters\VerbFilter;
@@ -28,19 +29,22 @@ class PromotionsController extends Controller
         $model = new PromotionForm;
         if ($model->load(Yii::$app->request->post())){
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if($model->upload()){
+            if($imagePath = $model->upload()){
                $promotion = new Promotions;
                $promotion->name = $model ->name;
                $promotion->description = $model ->description;
-               $promotion->urlImage = $model ->imagePath();
+               $promotion->urlImage = json_encode($imagePath);
                if ($promotion->save()){
                 $this->redirect(['promotions/index']);
-               }
-               
+               }               
             }
         }
-
-        return $this->render('create', ['model' => $model]);
+        return $this->render('create', [
+            'model' => $model,
+            'imagePath_prew' => [],
+            'imagePath_conf' => [],
+            'promotion_id' => '',            
+            ]);
     }
     public function actionDelete($id)
     {
@@ -69,5 +73,13 @@ class PromotionsController extends Controller
         $model->description = $promotion->description;
         $model->imageFile = $promotion->urlImage;
         return $this->render('create', ['model' => $model]);
+
+        return $this->render('create', [
+            'model' => $model, 
+            
+            'imagePath_prew' => $imagePath_prew,
+            'imagePath_conf' => $imagePath_conf,
+            'promotion_id' => $id,
+        ]);
     }
 }
